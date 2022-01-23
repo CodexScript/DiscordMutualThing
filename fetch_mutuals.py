@@ -71,6 +71,9 @@ async def on_ready():
         print('------')
 
         print('Subscribing to guild (this can take some time depending on the member count...)')
+        if guild.large:
+            print('This guild is considered large by Discord. This means you will not be able to scrape offline '
+                  'members from here.')
         success = await guild.subscribe()
         if success:
             print('Now fetching relationships for each guild member...')
