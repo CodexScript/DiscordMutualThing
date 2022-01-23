@@ -112,8 +112,9 @@ async def on_ready():
                     for i in trange(slices):
                         await send_webhook(embeds=slices[i])
                 else:
-                    print('Executing webhook')
                     await send_webhook(embeds=embeds)
+            else:
+                print('Executing webhook')
 
             print('Done.')
 
