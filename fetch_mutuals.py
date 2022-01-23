@@ -84,6 +84,8 @@ async def on_ready():
                 mutual_guilds = await member.mutual_guilds()
                 mutual_friends = await member.mutual_friends()
 
+                mutual_guilds = [x for x in mutual_guilds if x.id != int(cli_args.guild_id)]
+
                 embed = discord.Embed(title=f'Your shared mutuals with {member.name}#{member.discriminator}',
                                       description=member.mention, color=discord.Color.purple())
                 should_send = False
