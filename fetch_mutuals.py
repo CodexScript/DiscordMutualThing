@@ -109,7 +109,7 @@ async def on_ready():
                     slices = []
                     for i in range(0, len(embeds), slices_step):
                         slices.append(embeds[i:i + slices_step])
-                    for i in trange(slices):
+                    for i in trange(len(slices)):
                         await send_webhook(embeds=slices[i])
                 else:
                     await send_webhook(embeds=embeds)
