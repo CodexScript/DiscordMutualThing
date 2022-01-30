@@ -51,7 +51,7 @@ async def on_ready():
     session = aiohttp.ClientSession()
 
     async def send_webhook(*args, **kwargs):
-        webhook = discord.Webhook.from_url(url=config['webhookURL'], adapter=discord.AsyncWebhookAdapter(session))
+        webhook = discord.Webhook.from_url(url=config['webhookURL'], session=session)
         await webhook.send(*args, **kwargs)
         await asyncio.sleep(0.25)  # Avoid rate limit
 
@@ -76,6 +76,8 @@ async def on_ready():
                   'members from here.')
         success = await guild.subscribe()
         if success:
+            print(len(guild.members))
+            return
             print('Now fetching relationships for each guild member...')
             embeds = []
             progress_bar = trange(len(guild.members))
@@ -84,7 +86,7 @@ async def on_ready():
                 if member.id == client.user.id or member.bot:
                     continue
                 progress_bar.set_description(f'{member.name}#{member.discriminator}')
-                mutual_guilds = await member.mutual_guilds()
+                mutual_guilds = member.mutual_guilds
                 mutual_friends = await member.mutual_friends()
 
                 mutual_guilds = [x for x in mutual_guilds if x.id != guild.id]
